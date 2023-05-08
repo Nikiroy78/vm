@@ -1,0 +1,145 @@
+2 bytes encoded commands:
+
+
+PROGRAM BLOCKS (VOIDS) [0x00h]:
+============================================================
+System voids:
+============================================================
+0x00000000 - Main (can be contains into first byte)
+============================================================
+<void_header [00h]> ({mode (1)} {void_code (4)})
+00 - Default
+1F - ... Optimized
+
+<void_ender [01h]> ({void_code (4)})
+
+<void_call [F0h]> ({void_code (4)})
+
+<void_stack_push> ()
+
+STACK CONTROL COMMANDS [0x01h]:
+<stack_rm [00h]> ({errorMode (1)})
+Remove hightly stack data. Can be support 2 modes:
+00 - Ignore errors if stack size is 0.
+FF - Raising error if stack size is 0.
+example:
+01 00 FF
+--
+Remove hightly stack data and if stack size is 0, then raise error.
+
+<stack_push [01h]> ({size (1)} {data(size:length)})
+Add N (256 max) bytes in stack.
+example:
+01 01 0A 9F 8A 10 01 00 E4 0E 89 9C 3F
+--
+Add (9F 8A 10 01 00 E4 0E 89 9C 3F) into stack.
+
+<stack_ed [02h]> ({size (1)} {data(size:length)})
+Edit stack data with resize stack.
+example:
+01 02 0A 9F 8A 10 01 00 E4 0E 89 9C 3F
+--
+Resize hightly item into stack on 10 bytes and write in current item (9F 8A 10 01 00 E4 0E 89 9C 3F)
+
+<stack_repl [03h]> ({size (1)} {replace_data(size:length)})
+Edit first N bytes on needs data. If stack is overflowed, raising error.
+example:
+01 03 02 8C A1
+--
+Replace first 2 bytes of hightly stack data on (8C A1)
+
+
+HEAP CONTROL COMMANDS [0x02h]:
+<heap_init [00h]> ({heap_size (8)}) *Can be removed
+Init max address area (first argument - 8 bytes). If call twice and more, resize heap: remove overflowed items, etc.
+example:
+02 00 00 00 00 00 00 FF FF FF
+--
+Init heap with limit on 16 MB.
+
+<heap_alloc [01h]> ({size (4)})
+Add item into heap (first argument - size (4 bytes)).
+example:
+02 01 FF FF FF FF
+--
+Allocate 4 GB (4294967296 bytes) into heap and write address in stack.
+
+<heap_push [02h]> ({routing_mode (1)} {address (0/1/16)} {data (heap/stack/register->(address):length)})
+Write data into heap item.
+Routing modes:
+00 - by stack (address contains into stack)
+0F - by address into heap (address to heap item)
+1F - by address inside heap (address contains into heap)
+0D - by virtual register (address contains into virtual register)
+example (1):
+02 02 0F 5F 8A 11 09 90 9A 17 7F C8 0E EE 15 00 9B B8 F1 00 00 01
+--
+Write into 3-byte heap item with address : (5F 8A 11 09 90 9A 17 7F C8 0E EE 15 00 9B B8 F1)
+Data : (00 00 01)
+example (2):
+02 02 00 7F A1 90 4F
+--
+Write into 4-byte heap item with address from stack
+Data : (7F A1 90 4F)
+example (3):
+02 02 0D 00 F1 DE 90
+--
+Write into 3-byte heap item with address from virtual register (0x00 (AX))
+Data : (F1 DE 90)
+
+
+VIRTUAL REGISTER COMMANDS [0x03h]:
+==================================
+        :256 VM Registers:        
+==================================
+--4 Bytes:
+[General]
+0xF0 - EAX
+--8 Bytes:
+[General]
+0x00 - AX
+0x01 - BX
+0x02 - CX
+0x03 - DX
+--16 Bytes:
+[General]
+0x10 - RAX
+0x11 - RBX
+0x12 - RCX
+0x13 - RDX
+--32 Bytes:
+[General]
+0x20 - BAX
+0x21 - BBX
+0x22 - BCX
+0x23 - BDX
+==================================
+
+
+SYSTEM INPUT-OUTPUT COMMANDS (STDIN/STDOUT) [0x04h]:
+<stdout [00h]> ({mode (1)} {size(0/4)} {message (0/1/16/size)})
+System stdout.
+Modes:
+0x00 - from apperand
+0x0F - from register
+0x0D - from heap
+0x0E - from stack
+0x1F - from address into register
+0x1D - from address into heap
+0x1E - from address into stack
+example (1):
+04 00 0F 00
+--
+Write message when contained in register AX
+exapmple (2):
+04 00 0E
+--
+Write message from stack 
+
+
+CODE EXAMPLES:
+(1) Hello, world
+00 00 00 00 00 00 00                             -- Main begin
+01 01 0D 48 65 6C 6C 6F 2C 20 77 6F 72 6C 64 21  -- push ASCII bytes "Hello, World!" into stack
+04 00 0E                                         -- stdout from stack
+00 01 00 00 00 00                                -- Main end

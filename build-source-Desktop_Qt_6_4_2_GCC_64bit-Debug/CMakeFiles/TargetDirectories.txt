@@ -1,0 +1,7 @@
+/home/fullgream/AMRM/build-source-Desktop_Qt_6_4_2_GCC_64bit-Debug/CMakeFiles/source.dir
+/home/fullgream/AMRM/build-source-Desktop_Qt_6_4_2_GCC_64bit-Debug/CMakeFiles/edit_cache.dir
+/home/fullgream/AMRM/build-source-Desktop_Qt_6_4_2_GCC_64bit-Debug/CMakeFiles/rebuild_cache.dir
+/home/fullgream/AMRM/build-source-Desktop_Qt_6_4_2_GCC_64bit-Debug/CMakeFiles/list_install_components.dir
+/home/fullgream/AMRM/build-source-Desktop_Qt_6_4_2_GCC_64bit-Debug/CMakeFiles/install.dir
+/home/fullgream/AMRM/build-source-Desktop_Qt_6_4_2_GCC_64bit-Debug/CMakeFiles/install/local.dir
+/home/fullgream/AMRM/build-source-Desktop_Qt_6_4_2_GCC_64bit-Debug/CMakeFiles/install/strip.dir

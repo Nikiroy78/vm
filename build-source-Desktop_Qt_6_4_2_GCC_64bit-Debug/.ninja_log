@@ -1,0 +1,20 @@
+# ninja log v5
+7	19785	1683290001881165759	CMakeFiles/source.dir/main.cpp.o	63becb4b6d11d028
+4101	4456	1680770182568437235	CMakeFiles/source.dir/heap.cpp.o	573db3f91f1c2edc
+7123	23001	1683290005117181805	CMakeFiles/source.dir/command-exec.cpp.o	30d6dc6d1a68ced0
+7	253	1680858061243524650	CMakeFiles/source.dir/command-parser.cpp.o	bed3a8819856cc9a
+13	7122	1683289989237103060	CMakeFiles/source.dir/subprog.cpp.o	bc75f4bf4d63dc98
+8	17919	1683290000013156496	CMakeFiles/source.dir/vm-src.cpp.o	8c662ebd616721e6
+7755	8754	1683290168377991372	source	42a2232c84a9024b
+6	7754	1683290167361986334	CMakeFiles/source.dir/command.cpp.o	f15a662b292b2c0f
+7	7092	1683290101593660206	CMakeFiles/source.dir/stack.cpp.o	b235ac40fa594b53
+6	4733	1683290215902227032	CMakeFiles/source.dir/subprog.cpp.o	bc75f4bf4d63dc98
+5	12616	1683290223798266186	CMakeFiles/source.dir/vm-src.cpp.o	8c662ebd616721e6
+4	13455	1683290224634270332	CMakeFiles/source.dir/main.cpp.o	63becb4b6d11d028
+4734	15881	1683290227054282332	CMakeFiles/source.dir/command-exec.cpp.o	30d6dc6d1a68ced0
+12616	20619	1683290231802305876	CMakeFiles/source.dir/command.cpp.o	f15a662b292b2c0f
+13456	20803	1683290231994306828	CMakeFiles/source.dir/stack.cpp.o	b235ac40fa594b53
+20803	21480	1683290232682310240	source	42a2232c84a9024b
+8	9942	1683290321266749506	CMakeFiles/source.dir/stack.cpp.o	b235ac40fa594b53
+7	10645	1683290321982753057	CMakeFiles/source.dir/command.cpp.o	f15a662b292b2c0f
+10645	11626	1683290322978757996	source	42a2232c84a9024b
