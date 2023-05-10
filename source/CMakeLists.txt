@@ -14,6 +14,7 @@ add_executable(source
     heap.h heap.cpp
     byteType.h
     ritualka-commands.txt
+    boot-code.h
 )
 
 install(TARGETS source

@@ -15,6 +15,7 @@ public:
     vector<vector<byte>> commandBytes;
     Stack                stack;
     void                 execute       ();
+    vector<byte>         returnedValue {};
 };
 
 class VirtualMachine {
@@ -22,7 +23,7 @@ public:
     VirtualMachine                      (bool isDebugModeOn);
     void                 bindStopPoints (int* stopPoints);
     void                 includeVoid    (Subprog subprog);
-    vector<vector<byte>> parseCommands  (byte* allByteCode, int byteCodeLength);
+    vector<vector<byte>> parseCommands  (vector<byte> allByteCode, int byteCodeLength);
 
     vector<Subprog>      subprogs;
     // Registers
@@ -38,8 +39,7 @@ public:
     byte BX[8];
     byte CX[8];
     byte DX[8];
-    // [64-bit (16 bytes)]
-    // General
+    // [64-bit (16 bytes)]    // General
     byte RAX[16];
     byte RBX[16];
     byte RCX[16];

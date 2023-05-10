@@ -74,4 +74,16 @@ private:
     byte mode;
 };
 
+class STDIN {
+public:
+    STDIN (vector<byte> bytes, Stack globalStack);
+    virtual bool checkCorrectSyntax ();
+    virtual void exec               ();
+    Stack globalStack;
+    Stack localStack;
+private:
+    // From all comand
+    vector<byte> bytes;
+};
+
 #endif // COMMAND_H

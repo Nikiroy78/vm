@@ -1,0 +1,7 @@
+W:/projects/repositories/myself-vm/build-source-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/CMakeFiles/source.dir
+W:/projects/repositories/myself-vm/build-source-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+W:/projects/repositories/myself-vm/build-source-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+W:/projects/repositories/myself-vm/build-source-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
+W:/projects/repositories/myself-vm/build-source-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/CMakeFiles/install.dir
+W:/projects/repositories/myself-vm/build-source-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
+W:/projects/repositories/myself-vm/build-source-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir

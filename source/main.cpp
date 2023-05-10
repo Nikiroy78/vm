@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <math.h>
 #include "vm-src.h"
+#include "boot-code.h"
 
 using std::byte;
 using std::cout;
@@ -34,17 +37,20 @@ string showBytes (vector<byte> bytes) {
 }
 
 bool isEqualId (vector<byte> idA, vector<byte> idB) {
+    /*std::cout << showBytes(idA) << ";\n";
+    std::cout << showBytes(idB) << ";\n--\n";*/
     return  (
-    idA[0] == idB[0] &&
-    idA[1] == idB[1] &&
-    idA[2] == idB[2] &&
-    idA[3] == idB[3]
+        idA.at(0) == idB.at(0) &&
+        idA.at(1) == idB.at(1) &&
+        idA.at(2) == idB.at(2) &&
+        idA.at(3) == idB.at(3)
     );
 }
 
 int execFunct (VirtualMachine vmCur, vector<byte> id) {
     vector<byte> mainFunctId = {};
-    mainFunctId.insert(mainFunctId.begin(), 1, byte(0x00));
+    mainFunctId.insert(mainFunctId.begin(), 4, byte(0x00));
+    vmCur.subprogs;
 
     for (Subprog funct : vmCur.subprogs) {
         if (isEqualId(funct.id, id)) {
@@ -61,7 +67,18 @@ int execFunct (VirtualMachine vmCur, vector<byte> id) {
     return -1;
 }
 
+/*int getCurrentTime () {
+    auto now = std::chrono::system_clock::now();
+    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+    auto value = now_ms.time_since_epoch().count();
+    int currentTimeMillis = static_cast<int>(value);
+    return currentTimeMillis;
+}*/
+
 int main(int argc, char* argv[]) {
+    bool isShowRuntime = itemCharFound(argv, argc, "--show-runtime");  /* Проверим, чтобы флаг --show-runtime был в параметрах */
+    //isShowRuntime = true;  /* Отладка */
+    auto startedTime = std::chrono::steady_clock::now(); // запоминаем время начала
     bool isDebugMode = itemCharFound(argv, argc, "--debug");  /* Проверим, чтобы флаг --debug был в параметрах */
     int stopPoints[] = {};
     VirtualMachine vmCur(isDebugMode);
@@ -69,14 +86,14 @@ int main(int argc, char* argv[]) {
         vmCur.bindStopPoints(stopPoints);
     }
     // Прочитать весь байткод
-    byte allByteCode[] = {
+    vector<byte> allByteCode = bootFrom("standartInputWithOut"); /*{
         byte(0x00), byte(0x00), byte(0x00), byte(0x00), byte(0x00), byte(0x00), byte(0x00),
         byte(0x01), byte(0x01), byte(0x0D), byte(0x48), byte(0x65), byte(0x6C), byte(0x6C), byte(0x6F), byte(0x2C), byte(0x20), byte(0x77), byte(0x6F), byte(0x72), byte(0x6C), byte(0x64), byte(0x21),
         byte(0x04), byte(0x00), byte(0x0E),
         byte(0x00), byte(0x01), byte(0x00), byte(0x00), byte(0x00), byte(0x00)
-    };
+    };*/
     /* 1. Прогоняем все подпрограммы */
-    vector<vector<byte>> parsedBytecode = vmCur.parseCommands(allByteCode, sizeof(allByteCode));
+    vector<vector<byte>> parsedBytecode = vmCur.parseCommands(allByteCode, allByteCode.size());
 
     // Найдём все подпрограммы
     bool subprogParseIsStarted = false;
@@ -92,16 +109,22 @@ int main(int argc, char* argv[]) {
         ) {
             if (!subprogParseIsStarted) {
                 subprogParseIsStarted = true;
-                functMode = byte(command.at(commandPointer + 1));
+                //functMode = byte(command.at(commandPointer + 1));
+                functMode = byte(command.at(1));
                 functId = {
-                    byte(command[commandPointer + 2]),
+                    /*byte(command[commandPointer + 2]),
                     byte(command[commandPointer + 3]),
                     byte(command[commandPointer + 4]),
-                    byte(command[commandPointer + 5])
+                    byte(command[commandPointer + 5])*/
+                    byte(command.at(2)),
+                    byte(command.at(3)),
+                    byte(command.at(4)),
+                    byte(command.at(5))
                 };
             }
             else {
                 // (!) Выдать ошибку: нельзя объявлять функцию в функции.
+                return -1;
             }
         }
         else if (
@@ -112,12 +135,18 @@ int main(int argc, char* argv[]) {
                 // (!) Выдать ошибку: ошибка синтаксиса: обнаружен концевик без объявления начала функции
             }
             else if (!(
-                command[commandPointer + 1] == functId[1] &&
-                command[commandPointer + 2] == functId[2] &&
-                command[commandPointer + 3] == functId[3] &&
-                command[commandPointer + 4] == functId[4]
+                /*command[commandPointer + 1] == functId.at(1) &&
+                command[commandPointer + 2] == functId.at(2) &&
+                command[commandPointer + 3] == functId.at(3) &&
+                command[commandPointer + 4] == functId.at(4)*/
+                command.at(2) == functId.at(0) &&
+                command.at(3) == functId.at(1) &&
+                command.at(4) == functId.at(2) &&
+                command.at(5) == functId.at(3)
             )) {
                 // (!) Выдать ошибку: идентификатор подпрограммы в концевике не соответствует идентификатору подпрограммы в заголовке.
+                /*std::cout << "\n" << showBytes(functId) << "\n";
+                std::cout << showBytes({command.at(2), command.at(3), command.at(4), command.at(5)}) << "\n";*/
             }
             else {
                 Subprog funct(
@@ -139,13 +168,26 @@ int main(int argc, char* argv[]) {
             }
         }
         else if (subprogParseIsStarted) {
+            //std::cout << "pushCom: " << showBytes(command) << ";\n";
             subprogBytes.push_back(command);
+        }
+        else {
+            // (!) Выдать ошибку: команда вне функции.
+            return -1;
         }
 
         commandPointer++;
     }
     // Исполняем код
     vector<byte> mainFunctId = {};
-    mainFunctId.insert(mainFunctId.begin(), 1, byte(0x00));
+    mainFunctId.insert(mainFunctId.begin(), 4, byte(0x00));
+    auto execTime = std::chrono::steady_clock::now();
     execFunct(vmCur, mainFunctId);
+    auto endTime = std::chrono::steady_clock::now();
+    if (isShowRuntime) {
+        int executeTimeDebug = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - execTime).count();
+        int bootTimeDebug = std::chrono::duration_cast<std::chrono::milliseconds>(execTime - startedTime).count();
+        int totalTime = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startedTime).count();
+        cout << "\n========================\nExecute time: " << executeTimeDebug << " ms\nBoot time: " << bootTimeDebug << " ms\nTotal: " << totalTime << " ms";
+    }
 }

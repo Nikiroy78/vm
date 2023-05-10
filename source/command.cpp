@@ -105,6 +105,7 @@ std::string getTextFromBytes (vector<byte> bytes) {
 }
 
 void STDOUT::exec () {
+    //std::cout << int(this->mode) << "AAA!";
     vector<byte> stdoutData;
     switch (this->mode) {
         case byte(0x0E) : // Получить значение из вершины стэка
@@ -114,4 +115,31 @@ void STDOUT::exec () {
     //std::cout << int(this->mode) << "\n";
     std::cout << getTextFromBytes(stdoutData);
     //std::cout << ":" << getTextFromBytes(stdoutData);
+}
+
+STDIN::STDIN (vector<byte> bytes, Stack globalStack) {
+    this->bytes = bytes;
+    this->globalStack = globalStack;
+}
+
+bool STDIN::checkCorrectSyntax () {
+    int byteRequired = 3;
+    int byteRegistered = 0;
+    for (byte commandByte : this->bytes) {
+        byteRequired--;
+        byteRegistered++;
+        if (byteRequired == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void STDIN::exec () {
+    std::string stdinData;
+    //std::cin >> stdinData;
+    std::getline(std::cin, stdinData);
+    vector<byte> data {};
+    for (char symbol : stdinData) { data.push_back((byte)symbol); }
+    this->localStack.push(data);
 }
