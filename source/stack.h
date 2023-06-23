@@ -5,6 +5,8 @@
 using std::byte;
 using std::vector;
 
+int bytesToInt (vector<vector<byte>> bytes);
+
 class Stack {
 public:
     Stack();
@@ -20,6 +22,8 @@ private:
     int stackPointer = -1;
     int stackSize = 0;
     vector<vector<byte>> stackStorage = {};
+    // Link: -1 - Not Link; 0 - Link to stack; 1 - Link to heap
+    vector<int> stackLinker = {};
 };
 
 #endif // STACK_H
