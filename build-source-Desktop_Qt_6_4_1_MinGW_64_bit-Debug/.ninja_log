@@ -35,3 +35,15 @@
 990	1234	7052883195356824	source.exe	b75effd0a1405b8c
 4	998	7052883611712854	CMakeFiles/source.dir/main.cpp.obj	27ba6efb8bcbc87e
 998	1237	7052883614073394	source.exe	b75effd0a1405b8c
+151	1771	7113154869974938	CMakeFiles/source.dir/subprog.cpp.obj	1d7edd0e9fce1178
+147	1773	7113154869974938	CMakeFiles/source.dir/vm-src.cpp.obj	58985300ff2cd989
+148	1773	7113154869984931	CMakeFiles/source.dir/command.cpp.obj	d3df98591b675230
+149	1774	7113154869984931	CMakeFiles/source.dir/command-exec.cpp.obj	8af330b9b71e9707
+145	1804	7113154870285090	CMakeFiles/source.dir/main.cpp.obj	27ba6efb8bcbc87e
+9	694	7113158718017742	CMakeFiles/source.dir/stack.cpp.obj	582eb6d8fc3feef9
+11	853	7113158719598061	CMakeFiles/source.dir/command-exec.cpp.obj	8af330b9b71e9707
+8	877	7113158719838114	CMakeFiles/source.dir/command.cpp.obj	d3df98591b675230
+4	880	7113158719858131	CMakeFiles/source.dir/subprog.cpp.obj	1d7edd0e9fce1178
+6	932	7113158720388258	CMakeFiles/source.dir/vm-src.cpp.obj	58985300ff2cd989
+7	1200	7113158723068953	CMakeFiles/source.dir/main.cpp.obj	27ba6efb8bcbc87e
+1200	2256	7113158733550796	source.exe	b75effd0a1405b8c

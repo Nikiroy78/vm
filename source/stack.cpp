@@ -1,7 +1,7 @@
 #include "stack.h"
 #include <iostream>
 
-int bytesToInt (vector<vector<std::byte>> bytes) {
+int Stack::bytesToInt (vector<std::byte> bytes) {
     // (!) Сделать потом
     return 0;
 }
@@ -19,17 +19,17 @@ vector<byte> Stack::get () {
     vector<byte> result = this->stackStorage[this->stackPointer];
     if (this->stackLinker[this->stackPointer] != -1) {
         if (
-            this->stackLinker.size() < bytesToInt(this->stackStorage[this->stackPointer])
+            this->stackLinker.size() < this->bytesToInt(this->stackStorage[this->stackPointer])
         ) {
             // (!) Выдать ошибку: такого элемента не существует
         }
         else if (
-            bytesToInt(this->stackStorage[this->stackPointer]) == this->stackPointer
+            this->bytesToInt(this->stackStorage[this->stackPointer]) == this->stackPointer
         ) {
             // (!) Выдать ошибку: ссылочный элемент не может ссылаться на самого себя
         }
         else {
-            this->stackPointer = bytesToInt(this->stackStorage[this->stackPointer]);
+            this->stackPointer = this->bytesToInt(this->stackStorage[this->stackPointer]);
             return this->get();
         }
     }

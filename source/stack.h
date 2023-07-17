@@ -19,6 +19,9 @@ public:
     vector<byte> get ();
     int size ();
 private:
+    int bytesToInt (vector<byte> bytes);
+    //int bytesToInt (vector<std::byte, allocator<std::byte>> bytes);
+
     int stackPointer = -1;
     int stackSize = 0;
     vector<vector<byte>> stackStorage = {};
