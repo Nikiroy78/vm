@@ -76,7 +76,7 @@ void CommandExecutor::execute () {
         }
         else if (this->bytes.at(0) == byte(0x01)) {  // Работа со стэком
             switch (this->bytes.at(1)) {
-                case byte(0x01):  // Добавить значение в стек
+                case byte(0x01): {  // Добавить значение в стек
                     STACK_PUSH sp(this->bytes, this->globalStack);
                     sp.exec();
                     while (sp.localStack.size() != 0) {
@@ -85,6 +85,10 @@ void CommandExecutor::execute () {
                         sp.localStack.rm();
                     }
                     break;
+                }
+                case byte(0x02): {  // Изменить значение в стеке
+                    break;
+                }
             }
         }
         else if (this->bytes.at(0) == byte(0x04)) {
@@ -123,6 +127,7 @@ CommandExecutor::CommandExecutor (vector<byte> bytes, Stack globalStack) {
         {byte(0x00), byte(0x01)},  // void_ender
         // Stack
         {byte(0x01), byte(0x01)},
+        {byte(0x01), byte(0x02)},
         // Stdout-Stdin
         {byte(0x04), byte(0x00)},
         {byte(0x04), byte(0x01)}

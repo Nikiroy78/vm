@@ -60,6 +60,18 @@ private:
     vector<byte> bytes;
 };
 
+/*class STACK_EDIT {
+public:
+    STACK_EDIT (vector<byte> bytes, Stack globalStack);
+    virtual bool checkCorrectSyntax ();
+    virtual void exec               ();
+    Stack globalStack;
+    Stack localStack;
+private:
+    // From all comand
+    vector<byte> bytes;
+};*/
+
 class STDOUT {
 public:
     // From all command

@@ -51,5 +51,14 @@ Example:
 ----------------------------
 
 ----------------------------
+[0x06] - LOCAL_VARIABLES
+----------------------------
+0x00 {IGNORE_ERRORS:1}
+IGNORE_ERRORS : 0x00 - Ignore 0xFF - Not ignore
+Create new local variable (link to current sp)
+--
+0x01 {VARS_COUNT}
+Allocate variable area
+----------------------------
 [0xFF] - EXTENSIONS OF COMMANDS
 ----------------------------
